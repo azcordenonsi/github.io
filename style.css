@@ -116,9 +116,9 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(255, 255, 255, 0.44) 0%,
-    rgba(255, 255, 255, 0.34) 30%,
-    rgba(255, 255, 255, 0.05) 55%,
+    rgba(255, 255, 255, 0.34) 0%,
+    rgba(255, 255, 255, 0.24) 30%,
+    rgba(255, 255, 255, 0.14) 55%,
     rgba(255, 255, 255, 0.00) 78%
   );
   animation: smokeFloat 10s ease-in-out infinite alternate;
@@ -371,6 +371,7 @@
       .caso-secreto{ left: 22%; top: 7.5%; width: 34.7%; height: 23.4%; }
 
     }
+
 
 
 
