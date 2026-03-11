@@ -47,7 +47,7 @@
       width: 1024px;
       height: 768px;
       background: #000;
-      background-image: url("img/fundoPrincipal.png"); /* TROQUE AQUI */
+      background-image: url("img/fundoPrincipal.jpg"); /* TROQUE AQUI */
       background-repeat: no-repeat;
       background-position: center center;
       background-size: 1024px 768px;
@@ -387,4 +387,5 @@
       .sistema     { left: 83%; top: 46.9%; width: 14.2%; height: 10.7%; }
       .contato     { left: 69.8%; top: 56%; width: 15.1%; height: 9.6%; }
       .caso-secreto{ left: 22%; top: 7.5%; width: 34.7%; height: 23.4%; }
+
     }
