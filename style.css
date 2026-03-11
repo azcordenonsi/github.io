@@ -1,0 +1,390 @@
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #000000;
+      --gold: #c9a56a;
+      --gold-soft: rgba(201, 165, 106, 0.35);
+      --paper: #f2e7d2;
+      --label-bg: rgba(16, 11, 8, 0.55);
+      --label-border: rgba(201, 165, 106, 0.22);
+      --hover-bg: rgba(255, 220, 160, 0.08);
+      --shadow: rgba(0, 0, 0, 0.85);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--paper);
+      min-height: 100vh;
+      font-family: "Cormorant Garamond", serif;
+      overflow: hidden;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      padding: 20px;
+    }
+
+    .scene-wrapper {
+      position: relative;
+      width: 1024px;
+      height: 768px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+
+    .scene {
+      position: relative;
+      width: 1024px;
+      height: 768px;
+      background: #000;
+      background-image: url("img/fundoPrincipal.png"); /* TROQUE AQUI */
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 1024px 768px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(201, 165, 106, 0.08),
+        0 25px 60px rgba(0, 0, 0, 0.65);
+    }
+
+    /* vinheta */
+    .scene::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at center,
+          rgba(0,0,0,0) 42%,
+          rgba(0,0,0,0.18) 62%,
+          rgba(0,0,0,0.45) 82%,
+          rgba(0,0,0,0.72) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+ /* luz da luminária - versão mais visível */
+.scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse at 28% 34%,
+      rgba(255, 210, 120, 0.30) 0%,
+      rgba(255, 210, 120, 0.18) 14%,
+      rgba(255, 210, 120, 0.08) 24%,
+      rgba(255, 210, 120, 0.00) 38%
+    ),
+    radial-gradient(
+      ellipse at 34% 48%,
+      rgba(255, 190, 90, 0.10) 0%,
+      rgba(255, 190, 90, 0.04) 18%,
+      rgba(255, 190, 90, 0.00) 32%
+    );
+  animation: lampPulse 4s ease-in-out infinite;
+}
+
+@keyframes lampPulse {
+  0%   { opacity: 0.75; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.78; }
+}
+
+    /* névoa/fumaça */
+.mist {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.smoke {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.24) 0%,
+    rgba(255, 255, 255, 0.14) 30%,
+    rgba(255, 255, 255, 0.05) 55%,
+    rgba(255, 255, 255, 0.00) 78%
+  );
+  animation: smokeFloat 10s ease-in-out infinite alternate;
+}
+
+/* manchas principais perto da luminária/cigarro */
+.s1 {
+  width: 180px;
+  height: 180px;
+  left: 120px;
+  top: 110px;
+  opacity: 0.85;
+  animation-duration: 9s;
+}
+
+.s2 {
+  width: 220px;
+  height: 220px;
+  left: 150px;
+  top: 210px;
+  opacity: 0.30;
+  animation-duration: 12s;
+}
+
+.s3 {
+  width: 160px;
+  height: 160px;
+  left: 220px;
+  top: 290px;
+  opacity: 0.22;
+  animation-duration: 11s;
+}
+
+/* névoa leve mais espalhada */
+.s4 {
+  width: 240px;
+  height: 160px;
+  left: 560px;
+  top: 250px;
+  opacity: 0.14;
+  animation-duration: 14s;
+}
+
+.s5 {
+  width: 180px;
+  height: 120px;
+  left: 700px;
+  top: 360px;
+  opacity: 0.10;
+  animation-duration: 13s;
+}
+
+@keyframes smokeFloat {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(8px, -10px) scale(1.04);
+  }
+  100% {
+    transform: translate(-6px, -18px) scale(1.08);
+  }
+}
+
+    .brand {
+      position: absolute;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 5;
+      pointer-events: none;
+      text-shadow:
+        0 2px 4px rgba(0,0,0,0.95),
+        0 0 18px rgba(0,0,0,0.65);
+      animation: titleFade 3s ease;
+    }
+
+    @keyframes titleFade {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    .brand h1 {
+      font-size: 3.5rem;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .brand p {
+      font-family: "Special Elite", monospace;
+      font-size: 0.92rem;
+      color: var(--paper);
+      opacity: 0.95;
+      letter-spacing: 0.06em;
+    }
+
+    .hotspot {
+      position: absolute;
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: var(--paper);
+      border-radius: 10px;
+      transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
+    }
+
+    .hotspot:hover {
+      transform: scale(1.035);
+      background: var(--hover-bg);
+      box-shadow: inset 0 0 0 1px rgba(201,165,106,0.08);
+      filter: brightness(1.08);
+    }
+
+    .label {
+      display: inline-block;
+      padding: 6px 12px;
+      font-family: "Special Elite", monospace;
+      font-size: 0.84rem;
+      line-height: 1.2;
+      text-align: center;
+      color: #f6ebd8;
+      background: var(--label-bg);
+      border: 1px solid var(--label-border);
+      border-radius: 6px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.9);
+      box-shadow:
+        0 4px 14px rgba(0,0,0,0.38),
+        0 0 12px rgba(0,0,0,0.18);
+      backdrop-filter: blur(1px);
+    }
+
+    .hotspot:hover .label {
+      border-color: rgba(201, 165, 106, 0.45);
+      box-shadow:
+        0 4px 14px rgba(0,0,0,0.48),
+        0 0 16px rgba(201, 165, 106, 0.10);
+    }
+
+    /* Hotspot escondido */
+    .secret {
+      background: transparent !important;
+      border-radius: 0;
+    }
+
+    .secret:hover {
+      background: rgba(255, 230, 170, 0.05) !important;
+      outline: 1px dashed rgba(201,165,106,0.22);
+    }
+
+    /* POSICIONAMENTO AJUSTADO PARA 1024x768 */
+
+    .depoimentos {
+      left: 40px;
+      top: 430px;
+      width: 190px;
+      height: 78px;
+    }
+
+    .arquivos {
+      left: 300px;
+      top: 365px;
+      width: 185px;
+      height: 82px;
+    }
+
+    .filmes {
+      left: 392px;
+      top: 545px;
+      width: 210px;
+      height: 74px;
+    }
+
+    .jornais {
+      left: 635px;
+      top: 486px;
+      width: 210px;
+      height: 82px;
+    }
+
+    .sistema {
+      left: 850px;
+      top: 360px;
+      width: 145px;
+      height: 82px;
+    }
+
+    .contato {
+      left: 715px;
+      top: 430px;
+      width: 155px;
+      height: 74px;
+    }
+
+    .caso-secreto {
+      left: 225px;
+      top: 58px;
+      width: 355px;
+      height: 180px;
+    }
+
+    /* efeito opcional de entrada */
+    .scene {
+      animation: sceneFade 1.4s ease;
+    }
+
+    @keyframes sceneFade {
+      from {
+        opacity: 0;
+        transform: scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Responsivo simples:
+       em telas menores, mantém proporção e reduz tudo */
+    @media (max-width: 1100px) {
+      .scene-wrapper,
+      .scene {
+        width: 90vw;
+        height: calc(90vw * 0.75);
+        max-width: 1024px;
+        max-height: 768px;
+        background-size: 100% 100%;
+      }
+
+      .brand {
+        bottom: 2.8%;
+      }
+
+      .brand h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+      }
+
+      .brand p {
+        font-size: clamp(0.65rem, 1.2vw, 0.92rem);
+      }
+
+      .label {
+        font-size: clamp(0.58rem, 0.95vw, 0.84rem);
+        padding: 5px 10px;
+      }
+
+      .depoimentos { left: 3.9%; top: 56%; width: 18.6%; height: 10.2%; }
+      .arquivos    { left: 29.3%; top: 47.5%; width: 18.1%; height: 10.7%; }
+      .filmes      { left: 38.3%; top: 71%; width: 20.5%; height: 9.6%; }
+      .jornais     { left: 62%; top: 63.3%; width: 20.5%; height: 10.7%; }
+      .sistema     { left: 83%; top: 46.9%; width: 14.2%; height: 10.7%; }
+      .contato     { left: 69.8%; top: 56%; width: 15.1%; height: 9.6%; }
+      .caso-secreto{ left: 22%; top: 7.5%; width: 34.7%; height: 23.4%; }
+    }
