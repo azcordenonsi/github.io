@@ -1,8 +1,8 @@
 // LISTA DE REVISTAS COM SUAS IMAGENS
 const revistas = {
-  1: ["img/manual1_pag1.jpg", "img/manual1_pag2.jpg", "img/manual1_pag3.jpg"],
-  2: ["img/revista1_pag1.jpg", "img/revista1_pag2.jpg", "img/revista1_pag3.jpg"],
-  3: ["img/revista2_pag1.jpg", "img/revista2_pag2.jpg", "img/revista2_pag3.jpg"]
+  1: ["img/manual1_pag0.jpg","img/manual1_pag0B.jpg","img/manual1_pag1.jpg", "img/manual1_pag2.jpg", "img/manual1_pag3.jpg", "img/manual1_pag4.jpg", "img/manual1_pag5.jpg", "img/manual1_pag6.jpg", "img/manual1_pag7.jpg", "img/manual1_pag8.jpg", "img/manual1_pag9.jpg", "img/manual1_pag10.jpg", "img/manual1_pag11.jpg", "img/manual1_pag12.jpg", "img/manual1_pag13.jpg", "img/manual1_pag14.jpg", "img/manual1_pag15.jpg"],
+  2: ["img/revista1_pag1.jpg", "img/revista1_pag2.jpg", "img/revista1_pag3.jpg", "img/revista1_pag4.jpg", "img/revista1_pag5.jpg", "img/revista1_pag6.jpg", "img/revista1_pag7.jpg"],
+  3: ["img/revista2_pag1.jpg", "img/revista2_pag2.jpg", "img/revista2_pag3.jpg", "img/revista2_pag4.jpg", "img/revista2_pag5.jpg"]
 };
 
 let revistaAtual = 0;

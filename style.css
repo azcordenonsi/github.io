@@ -112,6 +112,13 @@ body{
 }
 
 /* PÁGINAS */
+.paginaArquivo{
+	position:absolute;
+	width:1024px;
+	top:0px;
+	left:0px;
+}
+
 .pagina{
 	position:absolute;
 	width:339px;
@@ -242,6 +249,14 @@ body{
 	background: #000;
 }
 
+.sceneInformacoes {
+	position: relative;
+	width: 1024px;
+	height: 768px;
+	overflow: hidden;
+	background: #000;
+}
+
 
 /* vinheta */
 .scene::before {
@@ -296,11 +311,35 @@ body{
   --lamp-y2: 28%;
 }
 
+.lamp-informacoes {
+  --lamp-x1: 50%;
+  --lamp-y1: -5%;
+}
+
 .lamp-arquivos {
   --lamp-x1: 28%;
   --lamp-y1: 10%;
   --lamp-x2: 33%;
   --lamp-y2: 18%;
+}
+
+.lamp-glow-informacoes {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	pointer-events: none;
+
+	background:
+	radial-gradient(
+		ellipse 100% 100% at var(--lamp-x1) var(--lamp-y1),
+		rgba(255, 210, 120, 0.45) 0%,
+		rgba(255, 210, 120, 0.20) 20%,
+		rgba(255, 210, 120, 0.08) 35%,
+		rgba(255, 210, 120, 0.00) 60%
+	);
+
+	transform-origin: var(--lamp-x1) var(--lamp-y1);
+	animation: lampFlicker 28s infinite, lampShift 58s infinite alternate;
 }
 
 .lamp-glow {
@@ -361,66 +400,97 @@ body{
 	100% { opacity: 0.85; }
 }
 
-/* névoa/fumaça */
-.mist {
-	position: absolute;
-	inset: 0;
-	z-index: 3;
-	pointer-events: none;
+.cinzeiro-smoke {
+  position: absolute;
+  left: 310px;
+  top: 126px;
+  width: 127px;
+  height: 410px;
+  pointer-events: none;
+  z-index: 999;
+  overflow: visible;
 }
 
-.smoke {
-	position: absolute;
-	display: block;
-	border-radius: 50%;
-	background: radial-gradient(
-		circle,
-		rgba(255, 255, 255, 0.34) 0%,
-		rgba(255, 255, 255, 0.24) 30%,
-		rgba(255, 255, 255, 0.14) 55%,
-		rgba(255, 255, 255, 0.00) 78%
-		);
-	animation: smokeFloat 10s ease-in-out infinite alternate;
+.cinzeiro-smoke span {
+  display: block;              /* importante */
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  width: 24px;
+  height:64px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  filter: blur(8px);
+  opacity: 0;
+  animation: smokeRise 6s infinite ease-in-out;
 }
 
-/* manchas principais perto da luminária/cigarro */
-.s1 {
-	width: 180px;
-	height: 180px;
-	left: 120px;
-	top: 110px;
-	opacity: 0.55;
-	animation-duration: 9s;
+.cinzeiro-smoke span:nth-child(1) {
+  animation-delay: 0s;
 }
 
-.s2 {
-  width: 220px;
-  height: 220px;
-  left: 150px;
-  top: 210px;
-  opacity: 0.50;
-  animation-duration: 12s;
+.cinzeiro-smoke span:nth-child(2) {
+  animation-delay: 1.2s;
+  left: 6px;
 }
 
-.s3 {
-  width: 160px;
-  height: 160px;
-  left: 220px;
-  top: 290px;
-  opacity: 0.52;
-  animation-duration: 11s;
+.cinzeiro-smoke span:nth-child(3) {
+  animation-delay: 2.4s;
+  left: 12px;
 }
 
-@keyframes smokeFloat {
+.cinzeiro-smoke span:nth-child(4) {
+  animation-delay: 3.6s;
+  left: 8px;
+}
+
+.cinzeiro-smoke span:nth-child(5) {
+  animation-delay: 4.8s;
+  left: 10px;
+}
+
+@keyframes smokeRise {
   0% {
-    transform: translate(0, 0) scale(1);
+    transform: translate(0, 0) scale(0.4);
+    opacity: 0;
   }
+
+  10% {
+    opacity: 0.35;
+  }
+
+  30% {
+    transform: translate(8px, -30px) scale(0.7);
+    opacity: 0.28;
+  }
+
   50% {
-    transform: translate(8px, -10px) scale(1.04);
+    transform: translate(-6px, -60px) scale(1);
+    opacity: 0.2;
   }
+
+  75% {
+    transform: translate(10px, -100px) scale(1.3);
+    opacity: 0.1;
+  }
+
   100% {
-    transform: translate(-6px, -18px) scale(1.08);
+    transform: translate(-4px, -140px) scale(1.7);
+    opacity: 0;
   }
+}
+
+
+@keyframes smokeDrift {
+
+  from {
+    transform: translateX(-2px);
+  }
+
+  to {
+    transform: translateX(4px);
+  }
+
 }
 
 .brand {
@@ -536,6 +606,12 @@ body{
 	clip-path: ellipse(25% 21% at 42% 42%);
 }
 
+.listaContatoAlterada {
+    left: 486px;
+    top: 314px;
+    height: 253px;
+}
+
 .listaArquivos {
     left: 20px;
     top: 275px;
@@ -635,52 +711,59 @@ body{
 
 /* POSICIONAMENTO AJUSTADO PARA 1024x768 */
 .depoimentos {
-    left: 40px;
-    top: 430px;
-    width: 190px;
-    height: 78px;
+    left: 50px;
+    top: 530px;
+    width: 225px;
+    height: 76px;
 }
 
 .arquivos {
-    left: 358px;
-    top: 445px;
-    width: 185px;
-    height: 82px;
+    left: 378px;
+    top: 452px;
+    width: 145px;
+    height: 76px;
 }
 
 .filmes {
     left: 392px;
     top: 545px;
     width: 210px;
-    height: 74px;
+    height: 76px;
 }
 
 .jornais {
     left: 600px;
     top: 520px;
     width: 210px;
-    height: 82px;
+    height: 76px;
 }
 
 .sistema {
-    left: 855px;
-    top: 330px;
-    width: 145px;
-    height: 82px;
+    left: 844px;
+    top: 340px;
+    width: 170px;
+    height: 76px;
 }
 
 .contato {
-    left: 680px;
+    left: 690px;
     top: 460px;
-    width: 155px;
-    height: 74px;
+    width: 125px;
+    height: 76px;
 }
 
-.caso-secreto {
-    left: 225px;
+.radio {
+    left: 24px;
+    top: 407px;
+    width: 110px;
+    height: 76px;
+}
+
+.informacoes {
+    left: 315px;
     top: 58px;
-    width: 355px;
-    height: 180px;
+    width: 155px;
+    height: 76px;
 }
 
 
@@ -698,44 +781,6 @@ body{
       opacity: 1;
       transform: scale(1);
     }
-}
-
-/* Responsivo simples:
-       em telas menores, mantém proporção e reduz tudo */
-@media (max-width: 1100px) {
-    .scene-wrapper,
-    .scene {
-      width: 90vw;
-      height: calc(90vw * 0.75);
-      max-width: 1024px;
-      max-height: 768px;
-      background-size: 100% 100%;
-	  }
-	
-	.brand {
-      bottom: 2.8%;
-    }
-
-    .brand h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-    }
-
-    .brand p {
-      font-size: clamp(0.65rem, 1.2vw, 0.92rem);
-    }
-
-    .label {
-      font-size: clamp(0.58rem, 0.95vw, 0.84rem);
-      padding: 5px 10px;
-    }
-
-      .depoimentos { left: 3.9%; top: 56%; width: 18.6%; height: 10.2%; }
-      .arquivos    { left: 3.3%; top: 47.5%; width: 18.1%; height: 10.7%; }
-      .filmes      { left: 38.3%; top: 71%; width: 20.5%; height: 9.6%; }
-      .jornais     { left: 62%; top: 63.3%; width: 20.5%; height: 10.7%; }
-      .sistema     { left: 83%; top: 46.9%; width: 14.2%; height: 10.7%; }
-      .contato     { left: 69.8%; top: 56%; width: 15.1%; height: 9.6%; }
-      .caso-secreto{ left: 22%; top: 7.5%; width: 34.7%; height: 23.4%; }
 }
 
 
@@ -805,7 +850,7 @@ body{
   height: 225px;
   background: url("img/rain.gif") center/cover no-repeat;
   z-index: 1;
-  opacity: 0.95;
+  opacity: 0.85;
 }
 
 .rain-window::after {
@@ -850,13 +895,21 @@ body{
   pointer-events: none;
 }
 
-.lamp-glow {
+.informacoes-layer {
   position: absolute;
   inset: 0;
-  z-index: 3;
+  background: url("img/fundoParede.jpg") center/1024px 768px no-repeat;
+  z-index: 2;
   pointer-events: none;
 }
 
+.radio-layer {
+  position: absolute;
+  inset: 0;
+  background: url("img/fundoRadio.jpg") center/1024px 768px no-repeat;
+  z-index: 2;
+  pointer-events: none;
+}
 
 .ui-button{
 	position:absolute;
@@ -1115,3 +1168,53 @@ box-shadow:
 }
 
 
+.radio-button {
+  position: absolute;
+  z-index: 6;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+#radioLA {
+  top: 432px;
+  left: 717px;
+  width: 56px;
+}
+
+#radioAM {
+  top: 446px;
+  left: 441px;
+  width: 54px;
+}
+
+#radioRA {
+  top: 432px;
+  left: 774px;
+  width: 56px;
+}
+
+#radioPower {
+  top: 431px;
+  left: 370px;
+  width: 48px;
+}
+
+#radioSintonia {
+  top: 428px;
+  left: 510px;
+  width: 4px;
+  transition: left 1s ease;
+}
+
+
+
+
+#tv-vidro{
+  position: absolute;
+  inset: 0;
+  background: url("img/tv-vidro2.png") no-repeat center;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 20;
+}

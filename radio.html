@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inspetor Zanko</title>
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <main class="page">
+    <div id="escala">
+    <div class="scene-wrapper">
+      <section class="sceneInformacoes">
+	    <a href="index.html" class="ui-button btn-voltar">VOLTAR</a>
+		<div id = "radioLayer" class="radio-layer"></div>
+		  <img src="img/radioLA.jpg" id="radioLA" class="radio-button">
+          <img src="img/radioRA.jpg" id="radioRA" class="radio-button">
+          <img src="img/radioOFF.jpg" id="radioPower" class="radio-button">
+		  <img src="img/nada.png" id="radioAM" class="radio-button">
+		  <img src="img/radioSintonia.jpg" id="radioSintonia" class="radio-button">
+	</section>
+    </div>
+	</div>
+  </main>
+  
+<script>
+const radioLA = document.getElementById("radioLA");
+const radioRA = document.getElementById("radioRA");
+const radioPower = document.getElementById("radioPower");
+const radioAM = document.getElementById("radioAM");
+const radioSintonia = document.getElementById("radioSintonia");
+
+const posicoesSintonia = [510, 530, 547, 564, 581, 597, 614, 630, 647];
+let sintoniaAtual = 0; // começa na posição 0
+
+let timerLA = null;
+let timerRA = null;
+let animandoLA = false;
+let animandoRA = false;
+let radioLigado = false;
+let animandoSintonia = false;
+let audioChiado = null;
+let audioAtual = null;
+
+
+function atualizarSintonia() {
+  radioSintonia.style.left = `${posicoesSintonia[sintoniaAtual]}px`;
+}
+
+function pararAudioAtual() {
+  if (audioAtual) {
+    audioAtual.pause();
+    audioAtual.currentTime = 0;
+    audioAtual = null;
+  }
+}
+
+function tocarAudioDaSintonia() {
+  pararAudioAtual();
+
+  audioAtual = new Audio(`audio/${sintoniaAtual}.mp3`);
+  audioAtual.play().catch((erro) => {
+    console.log("Não foi possível tocar o áudio da sintonia:", erro);
+  });
+}
+
+function tocarChiado() {
+  if (audioChiado) {
+    audioChiado.pause();
+    audioChiado.currentTime = 0;
+  }
+
+  audioChiado = new Audio("audio/chiado.mp3");
+  audioChiado.loop = true;
+  audioChiado.play().catch((erro) => {
+    console.log("Não foi possível tocar o chiado:", erro);
+  });
+}
+
+function pararChiado() {
+  if (audioChiado) {
+    audioChiado.pause();
+    audioChiado.currentTime = 0;
+    audioChiado = null;
+  }
+}
+
+function pressionarBotao(botao, imagemPressionada, imagemNormal, direcao) {
+  if (!radioLigado || animandoSintonia) return;
+
+  let novaSintonia = sintoniaAtual;
+
+  if (direcao === "menos" && sintoniaAtual > 0) {
+    novaSintonia = sintoniaAtual - 1;
+  }
+
+  if (direcao === "mais" && sintoniaAtual < 8) {
+    novaSintonia = sintoniaAtual + 1;
+  }
+
+  // se já está no limite, não faz nada
+  if (novaSintonia === sintoniaAtual) return;
+
+  animandoSintonia = true;
+  botao.src = imagemPressionada;
+
+  pararAudioAtual();
+  tocarChiado();
+
+  sintoniaAtual = novaSintonia;
+  atualizarSintonia();
+
+  setTimeout(() => {
+    botao.src = imagemNormal;
+    pararChiado();
+    tocarAudioDaSintonia();
+    animandoSintonia = false;
+  }, 1000);
+}
+
+radioLA.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  pressionarBotao(radioLA, "img/radioLB.jpg", "img/radioLA.jpg", "menos");
+});
+
+radioRA.addEventListener("click", (e) => {
+  e.stopPropagation();
+  console.log("...");
+  pressionarBotao(radioRA, "img/radioRB.jpg", "img/radioRA.jpg", "mais");
+});
+
+radioPower.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  radioLigado = !radioLigado;
+  radioPower.src = radioLigado ? "img/radioON.jpg" : "img/radioOFF.jpg";
+  radioAM.src = radioLigado ? "img/radioAM.jpg" : "img/nada.png";
+  if (radioLigado) {
+    tocarAudioDaSintonia();
+  } else {
+    pararChiado();
+    pararAudioAtual();
+  }
+});
+
+atualizarSintonia();
+
+</script>
+	 
+	 
+</body>
+</html>
+
+
