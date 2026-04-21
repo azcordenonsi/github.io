@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inspetor Zanko</title>
+    <link rel="icon" href="img/favicon.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+  <main class="page">
+    <div id="escala">
+    <div class="scene-wrapper">
+      <section class="scene">
+	    <a href="index.html" class="ui-button btn-voltar">VOLTAR</a>
+		<div class="rain-window-livro01"></div>
+		<div id = "livro01Layer" class="livro01-layer"></div>
+
+		<div class="lamp-glow lamp-livro01"></div>
+		<button id="audioToggle" class="audio-toggle btn-audio">ÁUDIO: OFF</button>
+	    <a class="hotspot secret listaLivro01" href="#" id="idLivro01" aria-label="Ligar"></a>
+	  </section>
+	  <div id="modal-livro" class="modal-livro">
+  <div class="modal-livro-box">
+
+    <button id="fechar-modal-livro" class="nav-arrow fecharLivro fecharLivro" aria-label="Fechar modal"></button>
+
+    <div class="modal-livro-grid">
+
+      <!-- LADO ESQUERDO FIXO -->
+     <aside class="livro-sidebar">
+  <img id="livro-capa" class="livro-capa" src="img/capaLivro01.jpg" alt="Capa do livro">
+
+  <div class="livro-compra">
+    <a id="btn-compra-1" class="ui-button btn-modal-compra" href="#" target="_blank">
+      <img src="img/amazon-comprar.png" alt="" class="btn-icon">
+      <span>AMAZON</span>
+    </a>
+
+    <a id="btn-compra-2" class="ui-button btn-modal-compra" href="#" target="_blank">
+      <img src="img/avec-comprar.png" alt="" class="btn-icon">
+      <span>EDITORA</span>
+    </a>
+  </div>
+</aside>
+
+      <!-- LADO DIREITO -->
+      <section class="livro-content">
+        <div class="livro-texto-wrap">
+          <h2 id="livro-titulo" class="livro-titulo">Assassinato no Projeto Eclipe</h2>
+          <div id="livro-texto" class="livro-texto"></div>
+        </div>
+
+        <div class="livro-acoes">
+          <button class="ui-button btn-aba-livro active" data-aba="sinopse">Sinopse</button>
+          <button class="ui-button btn-aba-livro" data-aba="bibliografia">Bibliografia</button>
+          <button class="ui-button btn-aba-livro" data-aba="capitulo1">Capítulo 01</button>
+          <a id="btn-playlist" class="ui-button btn-aba-livro btn-playlist" href="#" target="_blank" rel="noopener noreferrer">
+            Playlist
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+    </div>
+	</div>
+  </main>
+<audio id="rainAudio" loop preload="auto">
+   <source src="audio/chuva.ogg" type="audio/ogg">
+  Seu navegador não suporta áudio.
+</audio>
+<audio id="luzAudio" loop preload="auto">
+  <source src="audio/luzIncandescente.ogg" type="audio/ogg">
+  Seu navegador não suporta áudio.
+</audio>
+
+
+
+
+<script>
+/*const telefonar = document.getElementById("telefone");*/
+const livro01 = document.getElementById("idLivro01");
+const rainAudio = document.getElementById("rainAudio");
+const luzAudio = document.getElementById("luzAudio");
+const audioToggle = document.getElementById("audioToggle");
+
+let audioStarted = false;
+let fadeInterval = null;
+//let modoTelefone = "gancho";
+//let telefoneBloqueado = false;
+
+function updateAudioButton() {
+  audioToggle.textContent = rainAudio.paused ? "ÁUDIO: OFF" : "ÁUDIO: ON";
+}
+
+function fadeInAudio(target = 0.22, duration = 2500) {
+  clearInterval(fadeInterval);
+
+  rainAudio.volume = 0;
+  luzAudio.volume = 0;
+
+  const steps = 30;
+  const stepTime = duration / steps;
+  const increment = target / steps;
+
+  fadeInterval = setInterval(() => {
+    if (rainAudio.volume + increment >= target) {
+      rainAudio.volume = target;
+      luzAudio.volume = target;
+      clearInterval(fadeInterval);
+    } else {
+      rainAudio.volume = Math.min(rainAudio.volume + increment, target);
+      luzAudio.volume = Math.min(luzAudio.volume + increment, target);
+    }
+  }, stepTime);
+}
+
+async function startRain() {
+  try {
+    await rainAudio.play();
+    await luzAudio.play();
+
+    if (!audioStarted) {
+      fadeInAudio(0.20, 2200);
+      audioStarted = true;
+    }
+
+    updateAudioButton();
+  } catch (err) {
+    updateAudioButton();
+  }
+}
+
+function stopRain() {
+  rainAudio.pause();
+  luzAudio.pause();
+  updateAudioButton();
+}
+
+
+
+window.addEventListener("load", () => {
+  luzAudio.play().catch(() => {});
+  startRain();
+});
+
+document.addEventListener(
+  "click",
+  () => {
+    if (!audioStarted && rainAudio.paused) {
+      startRain();
+      luzAudio.play().catch(() => {});
+    }
+  },
+  { once: true }
+);
+
+audioToggle.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  if (rainAudio.paused) {
+    startRain();
+    luzAudio.play().catch(() => {});
+    //audioStart.volume = 1.0;
+    //audioChamando.volume = 1.0;
+    //audioEnd.volume = 1.0;
+    //audioGancho.volume = 1.0;
+  } else {
+    stopRain();
+    //audioStart.volume = 0.0;
+    //audioChamando.volume = 0.0;
+    //audioEnd.volume = 0.0;
+    //audioGancho.volume = 0.0;
+  }
+});
+
+updateAudioButton();
+
+
+
+
+const modalLivro = document.getElementById("modal-livro");
+const fecharModalLivro = document.getElementById("fechar-modal-livro");
+
+const livroTitulo = document.getElementById("livro-titulo");
+const livroTexto = document.getElementById("livro-texto");
+const livroCapa = document.getElementById("livro-capa");
+const btnCompra1 = document.getElementById("btn-compra-1");
+const btnCompra2 = document.getElementById("btn-compra-2");
+const btnPlaylist = document.getElementById("btn-playlist");
+
+const botoesAbaLivro = document.querySelectorAll(".btn-aba-livro[data-aba]");
+
+/* DADOS DO LIVRO */
+const dadosLivro = {
+  titulo: "Assassinato no Projeto Eclipe",
+  capa: "img/capaLivro01.jpg",
+  compra1: "https://example.com/compra1",
+  compra2: "https://example.com/compra2",
+  playlist: "https://open.spotify.com/playlist/0baFElEgCcdfPXO7c8fPIx?si=VeeRpeLWSzKf9hkNU01KlQ",
+  conteudos: {
+    sinopse: `
+      <p>
+        O ano é 1966. No litoral sul do Brasil, o inspetor Gaspar Zanko realiza sua ronda noturna quando se depara com um corpo boiando no canal. Sem identificação ou documentos, o caso rapidamente ganha contornos sombrios quando, no dia seguinte, foguetes cruzam o céu de Rio Grande em um espetáculo grandioso patrocinado pela NASA, enquanto um de seus principais cientistas é assassinado na praia. 
+      </p>
+      <p>
+        Pressionado pela junta militar que governa o país com mão de ferro e envolvido por interesses internacionais que impulsionam a corrida espacial, Zanko tem poucos dias para desvendar uma conspiração que parece ultrapassar as fronteiras. Em um jogo perigoso onde ciência e poder são os lados da mesma moeda, a verdade parece obcecada em permanecer oculta na escuridão. 
+      </p>
+    `,
+    bibliografia: `
+      <p><strong>Autor:</strong> Nome do autor</p>
+      <p><strong>Editora:</strong> Nome da editora</p>
+      <p><strong>Ano:</strong> 2024</p>
+      <p><strong>Edição:</strong> 2ª edição</p>
+      <p><strong>ISBN:</strong> 000-00-00000-000-0</p>
+    `,
+    capitulo1: `
+<p style="text-align:center;font-size:1.15rem"><b>Capítulo 01</b></p>
+<p style="text-align:right">Rio Grande - Área de Segurança Nacional</p>
+<p style="text-align:right">11 de novembro de 1966</p>
+
+<p>Estávamos prestes a dar a noite como encerrada quando o guarda uniformizado chegou esbaforido, o rosto vermelho de suor.</p>
+<p>— Um corpo.</p>
+<p>Ele tentou falar, mas o peito chiava dentro do uniforme escuro e tudo o que eu ouvi estava entrecortado por chilreios e uma tosse escarrada. </p>
+<p>— Calma, garoto — disse, estendendo-lhe um cigarro. </p>
+<p>Ele aceitou o oferecimento com as mãos trêmulas. Uma chama pálida escapou do meu isqueiro, iluminando uma noite sem nuvens.</p>
+<p>Ele colocou o quepe debaixo do braço, deu duas tragadas e tossiu por uns bons trinta segundos antes de dizer o que precisava dizer, o que não era grande coisa.</p>
+<p>— Um corpo — ele insistiu, apontando para trás. — Nas docas. Perto do largo.</p>
+<p>Eu já estava em movimento antes que ele terminasse o seu breve relato. Calculei mentalmente e decidi que chegaria mais rápido a pé. </p>
+<p>Havíamos terminado a terceira batida da noite, e o calor do verão gaúcho me fazia suar copiosamente. Durante boa parte da madrugada, eu e Iago, meu motorista, percorremos os bares da região do Porto com o proclame do juiz nos bolsos, uma pérola de sabedoria: Na data de hoje, até o fim do próximo dia, está proibida a venda de bebida alcoólica, com exceção de chope, cerveja, vinho e uísque.</p>
+<p>— Isso é alguma brincadeira? — perguntara ao Delegado, ao receber a incumbência na tarde anterior.</p>
+<p>— Os arruaceiros costumam tomar pinga — ele me respondeu, antes de voltar à leitura do seu jornal.</p>
+<p>Fora uma noite divertida, cheirando os copos dos frequentadores dos bares do Porto Velho até as docas do Mercado Público, o que provavelmente não melhoraria a percepção pública da polícia na região. Iago estacionara o nosso Volkswagen na Praça Ferreira quando o guarda correndo chamou a minha atenção.</p>
+<p>Agora, seguia em direção oposta, depois de mandar o meu motorista dar a volta. Atravessei a rua vazia, meus sapatos de sola de borracha ecoando fantasmagoricamente enquanto seguia pela Bacelar. Após dois anos em Rio Grande, já me acostumara com a maresia, que parecia impregnada em tudo, fosse na comida, na bebida ou nos cigarros que não queimavam direito. No entanto, ali, o cheiro era mais pujante, tornando-se quase tão denso quanto as neblinas que se erguiam da Lagoa dos Patos nos dias mais frios. </p>
+<p>Encontrei um segundo uniformizado na ponta do Largo, agachado junto ao píer, com a mão esticada, perto de um dos lampiões apagados. Havia quase uma dúzia de postes espalhados pelo lugar, mas mais da metade não funcionava.</p>
+<p>— O que pretende?</p>
+<p>O rapaz quase caiu na água de susto, o que era exatamente o que eu pretendia evitar. Ele me observou como se tivesse visto uma aparição e seus olhos recaíram no coldre. Ato contínuo, levou a mão a própria arma, mas mostrei a minha identificação, o que arrancou um suspiro de alívio. Garoto esperto.</p>
+<p>— Estava tentando pegar o corpo, senhor.</p>
+<p>Olhei para a água. Mesmo na escuridão, era possível observar um corpo boiando junto ao píer, com roupas masculinas. Ele balançava de um lado para o outro, seguindo o ritmo das pequenas ondas que quebravam nas pedras. </p>
+<p>— Só vai arranjar um banho forçado. Precisamos de um bicheiro.</p>
+<p>Ele me olhou como se eu tivesse pedido um pedaço da Lua. </p>
+<p>— É um pedaço de pau comprido, com um gancho na ponta — expliquei, paciente. — Serve para enganchar a amurada de botes que se aproximam do cais. Deve ter alguns no cais — disse, apontando para o sul.</p>
+<p>O garoto entendeu a ideia rapidamente e saiu correndo. Observei suas costas desaparecerem na escuridão e tirei um cigarro, girando-o entre os dedos. Do outro lado, a linha escura da Ilha da Pólvora recortava o horizonte azul turquesa. Me virei. O corpo ainda estava lá. Não havia marcas evidentes de violência. Se tivesse sorte, seria apenas mais um bêbado que trançara as pernas perto do canal. Isso acontecia, vez ou outra. </p>
+<p>Quando o guarda retornou com dois ganchos, Iago já estava do meu lado. O outro rapaz permanecera no Volkswagen, cuidando do rádio.</p>
+<p>Com os ganchos, puxamos o pobre coitado até o píer e o viramos de frente. Iago levou a mão até o nariz, mas conseguiu manter o conteúdo dos intestinos no próprio lugar. O guarda... bem, ele foi previdente o suficiente para se afastar por alguns metros antes de vomitar. </p>
+<p>Não fiz pouco caso do rapaz. O que antes constituía o rosto do homem morto havia sido transformado em uma pasta de ossos e sangue por, pelo menos, três disparos de arma de fogo. Aquilo era incomum. Ninguém saía descarregando a arma na cabeça de seus inimigos, a não ser que tivesse um objetivo bem definido. E a ausência da carteira ou quaisquer outros documentos, verificado após uma rápida conferência, parecia colocar um ponto final na questão: o morto se tornara um Fulano de Tal, um João Ninguém. Cabia a nós encontrarmos um nome para o cadáver e outro para o seu executor. A hipótese de suicídio, com três tiros, poderia ser sumariamente descartada.</p>
+<p>Quando o sol já raiava no horizonte, o fotógrafo criminalístico finalmente liberou a área e o corpo desconhecido foi levado para o necrotério. Estava para seguir até a delegacia quando um grito interrompeu esse raio de ação. Perto do cais, um dos guardas descobrira algo flutuando. O objeto em questão era uma caixa de madeira trabalhada, com uns vinte centímetros de largura. Com cuidado, abri o postigo com a ponta do lápis que trazia nos bolsos. O lado de dentro era forrado por um veludo de um roxo escurecido pela água e tinha as bordas grossas, do tamanho de um dedão, como as encontradas em caixas de bombons chiques. Mas pelas marcas presentes no veludo, os doces armazenados ali eram avaliados em quilates.</p>
+<p>Ora, ora, ora.</p>
+    `
+  }
+};
+
+function marcarAbaAtiva(aba) {
+  botoesAbaLivro.forEach((botao) => {
+    botao.classList.toggle("active", botao.dataset.aba === aba);
+  });
+}
+
+function carregarConteudoLivro(aba) {
+  livroTexto.innerHTML = dadosLivro.conteudos[aba] || "";
+  marcarAbaAtiva(aba);
+}
+
+function abrirModalLivro() {
+  livroTitulo.textContent = dadosLivro.titulo;
+  livroCapa.src = dadosLivro.capa;
+  livroCapa.alt = `Capa do livro ${dadosLivro.titulo}`;
+  btnCompra1.href = dadosLivro.compra1;
+  btnCompra2.href = dadosLivro.compra2;
+  btnPlaylist.href = dadosLivro.playlist;
+
+  carregarConteudoLivro("sinopse");
+  modalLivro.classList.add("ativo");
+}
+
+function fecharLivroModal() {
+  modalLivro.classList.remove("ativo");
+}
+
+botoesAbaLivro.forEach((botao) => {
+  botao.addEventListener("click", () => {
+    carregarConteudoLivro(botao.dataset.aba);
+  });
+});
+
+fecharModalLivro.addEventListener("click", fecharLivroModal);
+
+modalLivro.addEventListener("click", (e) => {
+  if (e.target === modalLivro) {
+    fecharLivroModal();
+  }
+});
+
+
+livro01.addEventListener("click", (e) => {
+      e.preventDefault();
+    abrirModalLivro();
+  });
+
+
+/*
+const audioStart = new Audio("audio/telefoneInicio.mp3");
+const audioChamando = new Audio("audio/telefoneChamando.mp3");
+const audioEnd = new Audio("audio/telefoneEnd.mp3");
+const audioGancho = new Audio("audio/telefoneGancho.mp3");
+
+telefonar.addEventListener("click", async (e) => {
+  e.stopPropagation();
+
+  if (telefoneBloqueado) return;
+  telefoneBloqueado = true;
+  telefonar.style.pointerEvents = "none";
+  
+  const meuTelefone = document.getElementById("telefone");
+  const contatoLayer = document.getElementById("contatoLayer");
+
+  try {
+    if (modoTelefone === "gancho") {
+      await tocarAudio(audioStart);
+
+      contatoLayer.style.backgroundImage = 'url("img/fundoContato02.png")';
+      meuTelefone.classList.add("listaContatoAlterada");
+
+      await tocarAudio(audioChamando);
+      await tocarAudio(audioEnd);
+
+      modoTelefone = "fora";
+    } else {
+      contatoLayer.style.backgroundImage = 'url("img/fundoContato.png")';
+      meuTelefone.classList.remove("listaContatoAlterada");
+	  await tocarAudio(audioGancho);
+      modoTelefone = "gancho";
+    }
+  } finally {
+    telefoneBloqueado = false;
+	telefonar.style.pointerEvents = "auto";
+  }
+})
+
+
+function tocarAudio(audio) {
+  return new Promise((resolve) => {
+    audio.currentTime = 0;
+
+    const aoTerminar = () => {
+      audio.removeEventListener("ended", aoTerminar);
+      resolve();
+    };
+
+    audio.addEventListener("ended", aoTerminar);
+    audio.play().catch(() => {
+      audio.removeEventListener("ended", aoTerminar);
+      resolve();
+    });
+  });
+}*/
+</script>
+</body>
+
+
+
+</html>
+
+
+
+

@@ -82,7 +82,7 @@ body {
 
 /* CAMADAS DE FUNDO */
 .office-layer,
-.contato-layer,
+.livro01-layer,
 .informacoes-layer,
 .radio-layer {
   position: absolute;
@@ -98,8 +98,8 @@ body {
   background-image: url("img/fundoPrincipal.png");
 }
 
-.contato-layer {
-  background-image: url("img/fundoContato.png");
+.livro01-layer {
+  background-image: url("img/fundolivro01.png");
 }
 
 .informacoes-layer {
@@ -266,7 +266,7 @@ body {
   color: #f2e7d2;
 
   font-family: "Special Elite", monospace;
-  font-size: clamp(0.52rem, 0.95vw, 0.74rem);
+  font-size: clamp(0.52rem, 1.2vw, 0.74rem);
   letter-spacing: 0.08em;
 
   text-transform: uppercase;
@@ -469,73 +469,86 @@ body {
 }
 
 .depoimentos {
-    left: 4.5%;
+    left: 5.5%;
     top: 69%;
-    width: 225px;
-    height: 76px;
+    width: 209px;
+    height: 58px;
 }
 
 .arquivos {
-  left: 37%;
+  left: 38%;
   top: 58%;
-  width: 145px;
-  height: 76px;
+  width: 118px;
+  height: 58px;
 }
 
 .filmes {
-    left: 36%;
+    left: 37%;
     top: 72%;
-    width: 210px;
-    height: 76px;
+    width: 188px;
+    height: 58px;
 }
 
 .jornais {
-    left: 59%;
+    left: 60%;
     top: 69%;
-    width: 210px;
-    height: 76px;
+    width: 189px;
+    height: 58px;
 }
 
 .sistema {
-    left: 82%;
+    left: 82.5%;
     top: 46%;
-    width: 170px;
-    height: 76px;
+    width: 154px;
+    height: 58px;
 }
 
-.contato {
-    left: 67%;
-    top: 58%;
-    width: 125px;
-    height: 76px;
+.livro01 {
+    left: 68.2%;
+    top: 54%;
+    width: 96px;
+    height: 58px;
 }
 
 .radio {
-    left: 1%;
+    left: 2%;
     top: 46%;
-    width: 110px;
-    height: 76px;
+    width: 98px;
+    height: 58px;
 }
 
 .informacoes {
     left: 30%;
     top: 5%;
     width: 155px;
-    height: 76px;
+    height: 58px;
 }
 
-/* Hotspot Contato */
+.jogo {
+    left: 91%;
+    top: 68%;
+    width: 82px;
+    height: 58px;
+}
 
-.listaContato {
+/* Hotspot livro01 */
+
+.listaLivro01 {
   position: absolute;
   left: 41.99%;
-  top: 44.92%;
-  width: 36.13%;
-  height: 32.55%;
-  clip-path: ellipse(25% 21% at 42% 42%);
+  top: 25.92%;
+  width: 30%;
+  height: 46.55%;
+   clip-path: polygon(
+    13.1% 0%,
+    95% 2%,
+    93% 98%,
+    14.5% 94%
+  );
+  /*clip-path: ellipse(25% 21% at 42% 42%);*/
 }
 
-.listaContatoAlterada {
+.listalivro01Alterada {
   left: 47.46%;
   top: 40.89%;
   height: 32.94%;
@@ -645,6 +658,7 @@ body {
 }
 
 .nav-arrow{
+  color: var(--paper);
   position:absolute;
 
   width: clamp(36px, 4.5vw, 46px);
@@ -674,7 +688,7 @@ body {
   padding-left:14px;
 }
 
-.nav-arrowFechar.fecharJR::before{
+.btn-fecharJR.fecharJR::before{
   content:"X";
 }
 
@@ -712,6 +726,16 @@ body {
   padding-left: 0px;
 }
 
+.nav-arrow.fecharLivro::before{
+	content:"X";
+}
+
+.nav-arrow.fecharLivro {
+  top: 0.5%;
+  left: 93.3%;
+  padding-top: 10px;
+  padding-left: 0px;
+}
 .nav-arrow:hover{
   border-color:rgba(201,165,106,0.7);
   background:rgba(24,18,12,0.92);
@@ -819,7 +843,7 @@ body {
   width: 41.99%;
 }
 
-/* RainWindow - Index e Contato */
+/* RainWindow - Index e livro01 */
 
 .rain-window {
   position: absolute;
@@ -839,7 +863,7 @@ body {
   background: rgba(0, 0, 0, 0.15);
 }
 
-.rain-window-contato {
+.rain-window-livro01 {
   position: absolute;
   right: 0;
   top: 0;
@@ -850,7 +874,7 @@ body {
   opacity: 0.25;
 }
 
-.rain-window-contato::after {
+.rain-window-livro01::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1036,7 +1060,7 @@ body {
   --lamp-y2: 48%;
 }
 
-.lamp-contato {
+.lamp-livro01 {
   --lamp-x1: 12%;
   --lamp-y1: 25%;
   --lamp-x2: 15%;
@@ -1139,8 +1163,8 @@ body {
     height: 24px;
 }
 
-.contato {
-    left: 67%;
+.livro01 {
+    left: 67.5%;
     top: 58%;
     width: 55px;
     height: 30px;
@@ -1158,6 +1182,13 @@ body {
     top: 6%;
     width: 85px;
     height: 25px;
+}
+
+.jogo {
+    left: 91%;
+    top: 68%;
+    width: 44px;
+    height: 29px;
 }
 
 .brand {
@@ -1291,5 +1322,254 @@ body {
 
   .brand p {
     margin-top: 6px;
+  }
+}
+
+
+
+.modal-livro {
+  position: absolute;
+  inset: 0;
+  z-index: 120;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 3%;
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(2px);
+}
+
+.modal-livro.ativo {
+  display: flex;
+}
+
+.modal-livro-box {
+  position: relative;
+  width: 88%;
+  height: 84%;
+  border: 1px solid rgba(201, 165, 106, 0.28);
+  border-radius: 10px;
+  background:
+    linear-gradient(rgba(10, 8, 7, 0.88), rgba(16, 12, 10, 0.92));
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.72),
+    inset 0 0 0 1px rgba(255,255,255,0.02);
+  overflow: hidden;
+}
+
+.modal-livro-grid {
+  display: grid;
+  grid-template-columns: 29% 1fr;
+  width: 100%;
+  height: 100%;
+}
+
+/* FECHAR */
+#fechar-modal-livro {
+  position: absolute;
+  top: 2.2%;
+  right: 1.8%;
+  z-index: 10;
+}
+
+/* PAINEL ESQUERDO */
+.livro-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8% 7% 6% 7%;
+  background:
+    linear-gradient(to bottom, rgba(22,16,12,0.88), rgba(10,8,7,0.70));
+  border-right: 1px solid rgba(201,165,106,0.14);
+}
+
+.livro-capa {
+  width: 82%;
+  max-height: 64%;
+  object-fit: contain;
+  border: 1px solid rgba(201,165,106,0.20);
+  border-radius: 6px;
+  box-shadow:
+    0 8px 22px rgba(0,0,0,0.55),
+    0 0 14px rgba(201,165,106,0.05);
+  margin-bottom: 10%;
+}
+
+.livro-compra {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.btn-modal-compra {
+  position: static;
+  width: 100%;
+  min-width: unset;
+  height: 38px;
+  padding: 0 12px;
+}
+
+.btn-icon {
+  padding-right: 5px;
+}
+
+/* PAINEL DIREITO */
+.livro-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  padding: 6.5% 5.5% 2.5% 5.5%;
+}
+
+.livro-texto-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.livro-titulo {
+  flex-shrink: 0;
+  font-family: "Special Elite", monospace;
+  font-size: clamp(1rem, 1.9vw, 1.7rem);
+  color: var(--gold);
+  margin-bottom: 16px;
+  letter-spacing: 0.04em;
+}
+
+.livro-texto {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 10px;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.05rem, 1.35vw, 1.2rem);
+  line-height: 1.5em;
+  color: var(--paper);
+  text-align: justify;
+}
+
+.livro-texto p {
+  margin-bottom: 0.8em;
+}
+
+.livro-texto p:last-child {
+  margin-bottom: 0;
+}
+
+.livro-texto::-webkit-scrollbar {
+  width: 8px;
+}
+
+.livro-texto::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.12);
+}
+
+.livro-texto::-webkit-scrollbar-thumb {
+  background: rgba(201,165,106,0.28);
+  border-radius: 6px;
+}
+
+/* BOTÕES INFERIORES */
+.livro-acoes {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(201,165,106,0.14);
+}
+
+.btn-aba-livro {
+  position: static;
+  min-width: 120px;
+  height: 36px;
+  padding: 0 14px;
+}
+
+.btn-aba-livro.active {
+  background: rgba(24,18,12,0.92);
+  border-color: rgba(201,165,106,0.58);
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.55),
+    0 0 12px rgba(201,165,106,0.08);
+}
+
+.btn-playlist {
+  text-decoration: none;
+}
+
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .modal-livro {
+    padding: 2.5%;
+  }
+
+  .modal-livro-box {
+    width: 96%;
+    height: 90%;
+  }
+
+  .modal-livro-grid {
+    grid-template-columns: 24% 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .livro-sidebar {
+    padding: 10% 5% 5% 5%;
+    border-right: 1px solid rgba(201,165,106,0.14);
+    border-bottom: none;
+  }
+
+  .livro-capa {
+    width: 100%;
+    max-height: 180px;
+    margin-bottom: 14px;
+  }
+
+  .livro-compra {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  
+  .livro-texto{
+    font-size: clamp(0.95rem, 1.35vw, 1.2rem);
+    line-height: 1.2;
+  }
+
+
+
+  .livro-content {
+    min-width: 0;
+    padding: 5% 4.5% 1.6% 4.5%;
+  }
+
+  .livro-acoes {
+    gap: 8px;
+  }
+
+  .btn-aba-livro {
+    min-width: calc(50% - 4px);
+    height: 26px;
+    font-size: 0.50rem;
+    padding: 0 8px;
+  }
+  
+  .btn-modal-compra {
+    width: 100%;
+    min-width: 0;
+    height: 26px;
+    font-size: 0.50rem;
+    letter-spacing: 0.04em;
+    padding: 0 6px;
   }
 }
